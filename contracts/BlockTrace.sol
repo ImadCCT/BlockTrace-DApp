@@ -32,30 +32,40 @@ contract BlockTrace {
     );
 
     function registerProduct(
-        uint _productId,
-        string memory _name
-    ) public {
+    uint _productId,
+    string memory _name
+) public {
 
-        require(
-            products[_productId].productId == 0,
-            "Product already exists"
-        );
+    require(
+        _productId != 0,
+        "Product ID cannot be zero"
+    );
 
-        products[_productId] = Product(
-            _productId,
-            _name,
-            msg.sender,
-            msg.sender,
-            "Produced",
-            block.timestamp
-        );
+    require(
+        bytes(_name).length > 0,
+        "Product name cannot be empty"
+    );
 
-        emit ProductRegistered(
-            _productId,
-            _name,
-            msg.sender
-        );
-    }
+    require(
+        products[_productId].productId == 0,
+        "Product already exists"
+    );
+
+    products[_productId] = Product(
+        _productId,
+        _name,
+        msg.sender,
+        msg.sender,
+        "Produced",
+        block.timestamp
+    );
+
+    emit ProductRegistered(
+        _productId,
+        _name,
+        msg.sender
+    );
+}
 
     function transferProduct(
         uint _productId,
@@ -103,6 +113,11 @@ contract BlockTrace {
         require(
             products[_productId].currentOwner == msg.sender,
             "Only current owner can update status"
+        );
+
+          require(
+            bytes(_status).length > 0,
+            "Status cannot be empty"
         );
 
         products[_productId].status = _status;
