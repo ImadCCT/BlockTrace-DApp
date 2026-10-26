@@ -114,10 +114,14 @@ contract BlockTrace {
             products[_productId].currentOwner == msg.sender,
             "Only current owner can update status"
         );
-
-          require(
+           require(
             bytes(_status).length > 0,
             "Status cannot be empty"
+        );
+        require(
+            keccak256(bytes(products[_productId].status)) !=
+            keccak256(bytes(_status)),
+            "Status is already set"
         );
 
         products[_productId].status = _status;
