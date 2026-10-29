@@ -86,6 +86,10 @@ contract BlockTrace {
             _receiver != address(0),
             "Invalid receiver"
         );
+        require(
+    _receiver != products[_productId].currentOwner,
+    "Product already belongs to receiver"
+        );
 
         address previousOwner = products[_productId].currentOwner;
 
