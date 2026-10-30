@@ -47,6 +47,11 @@ contract BlockTrace {
     );
 
     require(
+    bytes(_name).length <= 100,
+    "Product name is too long"
+    );
+
+    require(
         products[_productId].productId == 0,
         "Product already exists"
     );
